@@ -22,6 +22,7 @@
 #include <lo2s/process_controller.hpp>
 
 #include <lo2s/error.hpp>
+#include <lo2s/java/resolve.hpp>
 #include <lo2s/log.hpp>
 #include <lo2s/summary.hpp>
 #include <lo2s/trace/trace.hpp>
@@ -265,8 +266,10 @@ void ProcessController::handle_signal(Thread child, int status)
             // exit if detached from first child (the original sampled process)
             if (child == first_child_)
             {
+                java::JVMSymbols::instance->read_symbols();
                 std::cout << "[ lo2s: Child exited. Stopping measurements and closing trace. ]"
                           << std::endl;
+
                 throw std::system_error(0, std::system_category());
             }
         }
