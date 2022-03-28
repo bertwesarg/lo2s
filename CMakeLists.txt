@@ -304,7 +304,7 @@ add_subdirectory(man)
 
 message(STATUS "Linux kernel version: ${LINUX_VERSION}")
 
-target_compile_features(lo2s PRIVATE cxx_std_17)
+target_compile_features(lo2s PRIVATE cxx_std_20)
 
 # define feature test macro
 target_compile_definitions(lo2s PRIVATE _GNU_SOURCE)
@@ -337,7 +337,7 @@ target_include_directories(lo2s-perfmap PRIVATE
     ${JAVA_INCLUDE_PATH}
     ${JAVA_INCLUDE_PATH2}
 )
-target_link_libraries(lo2s-perfmap PRIVATE otf2xx::Writer Nitro::nitro-log Nitro::nitro-env)
+target_link_libraries(lo2s-perfmap PRIVATE otf2xx::Writer Nitro::log Nitro::env fmt::fmt)
 
 add_executable(lo2s-test     src/time/time.cpp src/java/test.cpp src/java/jni_signature.cpp)
 target_compile_definitions(lo2s-test PRIVATE _GNU_SOURCE)
@@ -347,7 +347,7 @@ target_include_directories(lo2s-test PRIVATE
     ${JAVA_INCLUDE_PATH}
     ${JAVA_INCLUDE_PATH2}
 )
-target_link_libraries(lo2s-test PRIVATE otf2xx::Writer Nitro::nitro-log Nitro::nitro-env)
+target_link_libraries(lo2s-test PRIVATE otf2xx::Writer Nitro::log Nitro::env)
 
 
 find_package(Java)
@@ -355,7 +355,7 @@ find_package(Java)
 include(UseJava)
 add_jar(lo2s-agent
     src/java/AttachOnce.java
-    INCLUDE_JARS $ENV{JAVA_HOME}/lib/tools.jar
+    # INCLUDE_JARS $ENV{JAVA_HOME}/lib/tools.jar
     ENTRY_POINT de/tudresden/zih/lo2s/AttachOnce
 )
 
